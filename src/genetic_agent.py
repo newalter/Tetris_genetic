@@ -1,7 +1,9 @@
 from copy import deepcopy
 
-from src.Tetris_Env import TetrisEnv, ActionSpace
 import numpy as np
+
+from src.Tetris_Env import ActionSpace
+
 
 class GeneticAgent(object):
     weight = None
@@ -9,16 +11,16 @@ class GeneticAgent(object):
     action_space = ActionSpace()
     fitness = None
 
-    def __init__(self, weight, fitness):
+    def __init__(self, env, weight, fitness=None):
         self.weight = weight
-        self.env = TetrisEnv()
+        self.env = env
         if fitness == None:
             self.fitness = self.play()
         else:
             self.fitness = fitness
         print(self.fitness)
 
-    def play(self, max_num_steps = 500, seed = 0):
+    def play(self, max_num_steps=500, seed=1):
         observation = self.env.reset(seed)
         is_done = False
         steps = 0
@@ -53,4 +55,4 @@ class GeneticAgent(object):
         return best_action
 
     def compute_evaluation(self, attributes):
-        return sum(p * q for p,q in zip(self.weight, attributes))
+        return sum(p * q for p, q in zip(self.weight, attributes))
