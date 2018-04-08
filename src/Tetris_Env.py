@@ -29,7 +29,6 @@ class TetrisEnv(object):
     board = None
     top = None
     currentPiece = None
-    nextPiece = None
     total_score = 0
     action_space = ActionSpace()
 
@@ -38,7 +37,6 @@ class TetrisEnv(object):
         self.board = [[0] * Col for i in range(Row)]
         self.top = [0] * Col
         self.currentPiece = self.new_piece()
-        self.nextPiece = self.new_piece()
         self.total_score = 0
 
     def step(self, action):
@@ -46,14 +44,13 @@ class TetrisEnv(object):
         score, is_done = self.perform_action(self.board, self.top, orient, slot, self.currentPiece)
         self.total_score = self.total_score + score
 
-        self.currentPiece = self.nextPiece
-        self.nextPiece = self.new_piece()
-        observation = (deepcopy(self.board), deepcopy(self.top), self.currentPiece, self.nextPiece)
+        self.currentPiece = self.new_piece()
+        observation = (deepcopy(self.board), deepcopy(self.top), self.currentPiece)
         return observation, self.total_score, is_done
 
     def reset(self, seed = 0):
         self.__init__(seed)
-        observation = (deepcopy(self.board), deepcopy(self.top), self.currentPiece, self.nextPiece)
+        observation = (deepcopy(self.board), deepcopy(self.top), self.currentPiece)
         return observation
 
     def seed(self, seed=None):

@@ -5,5 +5,5 @@ from src.genetic_learner import GeneticLearner
 
 learner = GeneticLearner()
 learner.load_weight()
-learner.learn()
+learner.learn(num_generations=1000)
 learner.save_weight()

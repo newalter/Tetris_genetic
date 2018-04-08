@@ -25,8 +25,8 @@ class GeneticLearner():
             self.agents.append(GeneticAgent(env=self.env, weight=weight))
 
     def normailize(self, weight):
-        square_sum = sum(k ** 2 for k in weight)
-        return weight / square_sum
+        square_sum_root = np.sqrt(sum(k ** 2 for k in weight))
+        return weight / square_sum_root
 
     def save_weight(self, filepath="weight.txt"):
         f = open(filepath, "w+")
@@ -40,11 +40,11 @@ class GeneticLearner():
     def load_weight(self, filepath="weight.txt"):
         f = open(filepath, "r")
         for line in f:
-            weight = [float(k) for k in line.split()]
+            weight = np.array([float(k) for k in line.split()])
             fitness = None
             if len(weight) == 5:
                 fitness = weight[4]
-                del weight[4:]
+                weight.resize(4)
             self.agents.append(GeneticAgent(self.env, weight, fitness))
         f.close()
 
@@ -54,10 +54,11 @@ class GeneticLearner():
                 self.agents.append(self.breeding())
             self.agents.sort(key=lambda x: x.fitness, reverse=True)
             del self.agents[BATCH_SIZE:]
-            print("{} {} \n".format(self.agents[0].fitness, self.agents[1].fitness))
+            self.save_weight("{}th_generation.txt".format(generation + 1))
+            print("{}th_generation: {} {} \n".format(generation+1, self.agents[0].fitness, self.agents[1].fitness))
 
     def breeding(self):
-        tournament = random.sample(self.agents, int(0.1 * BATCH_SIZE))
+        tournament = random.sample(self.agents, int(0.3 * BATCH_SIZE))
         best = max(tournament, key=lambda x: x.fitness)
         tournament.remove(best)
         second_best = max(tournament, key=lambda x: x.fitness)
