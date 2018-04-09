@@ -3,9 +3,9 @@ from copy import deepcopy
 import numpy as np
 
 from src.Tetris_Env import ActionSpace
-from src.configuration import Row, Col
-from src.genetic_learner import FITNESS_TEST
+from src.configuration import Row
 
+FITNESS_TEST = 10
 
 class GeneticAgent(object):
     weight = None
