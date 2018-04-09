@@ -1,11 +1,14 @@
-import random
-
-from src.genetic_agent import GeneticAgent
 from src.genetic_learner import GeneticLearner
 
+# Main Method for training
+
 learner = GeneticLearner()
+# fill up the first generation if you are starting with nothing
+# learner.replenish()
+
 learner.load_weight("weight.txt")
+
+# main learning method
 learner.learn(num_generations=1000)
-#learner.sieve_similar()
-#learner.replenish(47)
+
 learner.save_weight()
