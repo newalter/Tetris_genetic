@@ -9,11 +9,16 @@ from scipy.spatial import distance
 BATCH_SIZE = 100
 NUM_ATTRIBUTE = 5
 TOURNAMENT_SIZE = 2
+CLOSENESS = 0.01
+MUTATION_P = 0.05
+MUTATION_RANGE = 0.2
+REPLENISH_SIZE = 20
+OFFSPRING_SIZE = 20
 
 def mutate(weight):
-    if random.random() < 0.05:
+    if random.random() < MUTATION_P:
         pos = random.randrange(0, NUM_ATTRIBUTE)
-        weight[pos] = weight[pos] + random.random() * 0.4 - 0.2
+        weight[pos] = weight[pos] + random.random() * 2 * MUTATION_RANGE - MUTATION_RANGE
     return weight
 
 
@@ -52,14 +57,14 @@ class GeneticLearner():
 
     def learn(self, num_generations=1):
         for generation in range(num_generations):
-            self.replenish(20)
-            for offspring in range(int(0.2 * BATCH_SIZE)):
+            self.replenish(REPLENISH_SIZE)
+            for offspring in range(OFFSPRING_SIZE):
                 self.agents.append(self.crossover())
             self.agents.sort(key=lambda x: x.fitness, reverse=True)
             self.sieve_similar()
             del self.agents[BATCH_SIZE:]
             self.save_weight("{}th_generation.txt".format(generation + 1))
-            print("{}th_generation: {} {} \n".format(generation+1, self.agents[0].fitness, self.agents[1].fitness))
+            print("{}th_generation, best two: {} {} \n".format(generation+1, self.agents[0].fitness, self.agents[1].fitness))
 
     def crossover(self):
         tournament = random.sample(self.agents, TOURNAMENT_SIZE)
@@ -71,12 +76,12 @@ class GeneticLearner():
         agent = GeneticAgent(self.env, weight)
         return agent
 
-    def sieve_similar(self, closeness = 0.01):
+    def sieve_similar(self):
         i = 0
         while i < len(self.agents):
             j = i + 1
             while j < len(self.agents):
-                if distance.euclidean(self.agents[i].weight, self.agents[j].weight) < closeness:
+                if distance.euclidean(self.agents[i].weight, self.agents[j].weight) < CLOSENESS:
                     self.agents.remove(self.agents[j])
                 else:
                     j = j + 1
