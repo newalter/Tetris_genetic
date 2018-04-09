@@ -98,14 +98,17 @@ class TetrisEnv(object):
         return score, is_done
 
     def evaluate_board(self, board, top):
-        total_height = sum(top)
+        average_height = sum(top) / 10.0
+        max_height = max(top)
         diff_height = 0
         for i in range(Col - 1):
             diff_height = diff_height + abs(top[i] - top[i + 1])
         holes = 0
+        depth_holes = 0
         for i in range(Row):
             for j in range(Col):
                 if board[i][j] == 0 and i < top[j]:
                     holes = holes + 1
+                    depth_holes = depth_holes + (top[j] - i)
         # arbitrary reward function from online source
-        return total_height, diff_height, holes, self.total_score
+        return average_height, max_height, diff_height, holes, depth_holes

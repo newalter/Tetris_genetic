@@ -5,12 +5,12 @@ import numpy as np
 from src.Tetris_Env import TetrisEnv
 from src.genetic_agent import GeneticAgent
 
-BATCH_SIZE = 1000
-
+BATCH_SIZE = 100
+NUM_ATTRIBUTE = 5
 
 def mutate(weight):
     if random.random() < 0.05:
-        pos = random.randrange(0, 4)
+        pos = random.randrange(0, NUM_ATTRIBUTE)
         weight[pos] = weight[pos] + random.random() * 0.4 - 0.2
     return weight
 
@@ -21,7 +21,7 @@ class GeneticLearner():
 
     def initialization(self):
         for i in range(BATCH_SIZE):
-            weight = self.normailize(np.random.rand(4) * 2 - 1)
+            weight = self.normailize(np.random.rand(NUM_ATTRIBUTE)*-1)
             self.agents.append(GeneticAgent(env=self.env, weight=weight))
 
     def normailize(self, weight):
@@ -42,9 +42,9 @@ class GeneticLearner():
         for line in f:
             weight = np.array([float(k) for k in line.split()])
             fitness = None
-            if len(weight) == 5:
-                fitness = weight[4]
-                weight.resize(4)
+            if len(weight) == NUM_ATTRIBUTE + 1:
+                fitness = weight[NUM_ATTRIBUTE]
+                weight.resize(NUM_ATTRIBUTE)
             self.agents.append(GeneticAgent(self.env, weight, fitness))
         f.close()
 
@@ -58,7 +58,7 @@ class GeneticLearner():
             print("{}th_generation: {} {} \n".format(generation+1, self.agents[0].fitness, self.agents[1].fitness))
 
     def breeding(self):
-        tournament = random.sample(self.agents, int(0.3 * BATCH_SIZE))
+        tournament = random.sample(self.agents, int(0.1 * BATCH_SIZE))
         best = max(tournament, key=lambda x: x.fitness)
         tournament.remove(best)
         second_best = max(tournament, key=lambda x: x.fitness)
