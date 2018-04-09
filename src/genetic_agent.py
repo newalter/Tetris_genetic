@@ -4,6 +4,8 @@ import numpy as np
 
 from src.Tetris_Env import ActionSpace
 from src.configuration import Row, Col
+from src.genetic_learner import FITNESS_TEST
+
 
 class GeneticAgent(object):
     weight = None
@@ -16,9 +18,9 @@ class GeneticAgent(object):
         self.env = env
         if fitness is None:
             self.fitness = 0
-            for i in range(10):
+            for i in range(FITNESS_TEST):
                 self.fitness = self.fitness + self.play(seed=i * 100)
-            self.fitness = self.fitness / 10
+            self.fitness = self.fitness / FITNESS_TEST
         else:
             self.fitness = fitness
         print("fitness is {}".format(self.fitness))
