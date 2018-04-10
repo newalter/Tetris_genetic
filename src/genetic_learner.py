@@ -13,7 +13,7 @@ NUM_ATTRIBUTE = 5
 
 # Size of the subset of potential parents. A larger tournament_size indicates a larger selective pressure.
 # A larger tournament_size might result in faster convergence but also lower diversity in the population
-TOURNAMENT_SIZE = 2
+TOURNAMENT_SIZE = 3
 
 # How close are two members to be considered as a single specimen and one deleted
 CLOSENESS = 0.02
