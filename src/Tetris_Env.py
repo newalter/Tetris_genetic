@@ -112,4 +112,4 @@ class TetrisEnv(object):
                     holes = holes + 1
                     depth_holes = depth_holes + (top[j] - i)
         # arbitrary reward function from online source
-        return average_height, max_height, diff_height, holes, depth_holes
+        return average_height, max_height, diff_height, holes, holes * holes, depth_holes

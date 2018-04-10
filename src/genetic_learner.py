@@ -8,8 +8,9 @@ from scipy.spatial import distance
 
 BATCH_SIZE = 500
 
-# currently we have 5 attributes: average height, maximum height, height differences, number of holes, depth of holes,
-NUM_ATTRIBUTE = 5
+# currently we have 6 attributes: average height, maximum height, height differences, number of holes,
+# number of holes^2, depth of holes,
+NUM_ATTRIBUTE = 6
 
 # Size of the subset of potential parents. A larger tournament_size indicates a larger selective pressure.
 # A larger tournament_size might result in faster convergence but also lower diversity in the population
@@ -98,7 +99,9 @@ class GeneticLearner():
         best = max(tournament, key=lambda x: x.fitness)
         tournament.remove(best)
         second_best = max(tournament, key=lambda x: x.fitness)
-        weight = best.fitness * best.weight + second_best.fitness * second_best.weight
+        # weight = best.fitness * best.weight + second_best.fitness * second_best.weight
+        alpha = random.random()
+        weight = best.weight * alpha + second_best.weight * (1 - alpha)
         weight = self.normailize(mutate(weight))
         agent = GeneticAgent(self.env, weight)
         return agent
