@@ -13,20 +13,20 @@ NUM_ATTRIBUTE = 5
 
 # Size of the subset of potential parents. A larger tournament_size indicates a larger selective pressure.
 # A larger tournament_size might result in faster convergence but also lower diversity in the population
-TOURNAMENT_SIZE = 5
+TOURNAMENT_SIZE = 2
 
-# How close are two members to be considered as a
-CLOSENESS = 0.01
+# How close are two members to be considered as a single specimen and one deleted
+CLOSENESS = 0.02
 
 # Probability and Degree of mutation
-MUTATION_P = 0.05
+MUTATION_P = 0.1
 MUTATION_RANGE = 0.2
 
 # number of random members added to the population in each new generation; Helps in maintaining diversity
-REPLENISH_SIZE = 15
+REPLENISH_SIZE = 10
 
 # number of offsprings produced in each new generation
-OFFSPRING_SIZE = 25
+OFFSPRING_SIZE = 30
 
 # number of rounds to be played to decide fitness
 # consider decrease this if the learning is too slow

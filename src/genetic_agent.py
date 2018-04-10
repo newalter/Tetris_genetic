@@ -16,7 +16,7 @@ class GeneticAgent(object):
     def __init__(self, env, weight, fitness=None):
         self.weight = weight
         self.env = env
-        if fitness is None:
+        if True:#fitness is None:
             self.fitness = 0
             for i in range(FITNESS_TEST):
                 self.fitness = self.fitness + self.play(seed=i * 100)

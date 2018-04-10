@@ -11,4 +11,4 @@ learner.load_weight("weight.txt")
 # main learning method
 learner.learn(num_generations=1000)
 
-learner.save_weight()
+learner.save_weight("weight.txt")

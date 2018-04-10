@@ -55,7 +55,7 @@ class TetrisEnv(object):
 
     def seed(self, seed=None):
         if seed is not None:
-            self.randomness.seed = seed
+            self.randomness.seed(seed)
         return self.randomness.seed
 
     def new_piece(self):
