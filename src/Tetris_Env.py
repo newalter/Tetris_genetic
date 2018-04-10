@@ -3,6 +3,7 @@ from src.configuration import pOrients, pWidth, pHeight, pTop, pBottom, Num_Type
 from random import Random
 import numpy as np
 
+LOSING_ROW = 11
 
 class ActionSpace(object):
     legal_moves = []
@@ -68,7 +69,7 @@ class TetrisEnv(object):
         for c in range(pWidth[currentPiece][orient]):
             height = max(height, top[slot + c] - pBottom[currentPiece][orient][c])
 
-        if height + pHeight[currentPiece][orient] >= Row:
+        if height + pHeight[currentPiece][orient] >= LOSING_ROW:
             is_done = True
             return 0, is_done
 

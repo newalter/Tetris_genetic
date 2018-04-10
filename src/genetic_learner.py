@@ -6,27 +6,27 @@ from src.Tetris_Env import TetrisEnv
 from src.genetic_agent import GeneticAgent
 from scipy.spatial import distance
 
-BATCH_SIZE = 100
+BATCH_SIZE = 500
 
 # currently we have 5 attributes: average height, maximum height, height differences, number of holes, depth of holes,
 NUM_ATTRIBUTE = 5
 
 # Size of the subset of potential parents. A larger tournament_size indicates a larger selective pressure.
 # A larger tournament_size might result in faster convergence but also lower diversity in the population
-TOURNAMENT_SIZE = 3
+TOURNAMENT_SIZE = 10
 
 # How close are two members to be considered as a single specimen and one deleted
 CLOSENESS = 0.02
 
 # Probability and Degree of mutation
-MUTATION_P = 0.1
+MUTATION_P = 0.2
 MUTATION_RANGE = 0.2
 
 # number of random members added to the population in each new generation; Helps in maintaining diversity
-REPLENISH_SIZE = 10
+REPLENISH_SIZE = int(0.1 * BATCH_SIZE)
 
 # number of offsprings produced in each new generation
-OFFSPRING_SIZE = 30
+OFFSPRING_SIZE = int(0.3 * BATCH_SIZE)
 
 # number of rounds to be played to decide fitness
 # consider decrease this if the learning is too slow
