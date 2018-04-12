@@ -10,11 +10,11 @@ BATCH_SIZE = 500
 
 # currently we have 6 attributes: average height, maximum height, height differences, number of holes,
 # number of holes^2, depth of holes,
-NUM_ATTRIBUTE = 6
+NUM_ATTRIBUTE = 5
 
 # Size of the subset of potential parents. A larger tournament_size indicates a larger selective pressure.
 # A larger tournament_size might result in faster convergence but also lower diversity in the population
-TOURNAMENT_SIZE = 10
+TOURNAMENT_SIZE = 6
 
 # How close are two members to be considered as a single specimen and one deleted
 CLOSENESS = 0.02
@@ -90,7 +90,7 @@ class GeneticLearner():
             self.sieve_similar()
             del self.agents[BATCH_SIZE:]
             self.save_weight("{}th_generation.txt".format(generation + 1))
-            print("{}th_generation, best two: {} {} \n".format(generation+1, self.agents[0].fitness, self.agents[1].fitness))
+            # print("{}th_generation, best two: {} {} \n".format(generation+1, self.agents[0].fitness, self.agents[1].fitness))
 
     # crossover operator
     # it employs the Tournament Selection Process
@@ -117,5 +117,5 @@ class GeneticLearner():
                 else:
                     j = j + 1
             i = i + 1
-        print("remaining number = {}".format(len(self.agents)))
+        # print("remaining number = {}".format(len(self.agents)))
         return

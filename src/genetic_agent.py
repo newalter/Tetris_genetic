@@ -23,7 +23,7 @@ class GeneticAgent(object):
             self.fitness = self.fitness / FITNESS_TEST
         else:
             self.fitness = fitness
-        print("fitness is {}".format(self.fitness))
+        # print("fitness is {}".format(self.fitness))
 
     def play(self, max_num_steps=1000, seed=123):
         observation = self.env.reset(seed)
