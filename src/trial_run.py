@@ -7,6 +7,8 @@ from src.genetic_agent import GeneticAgent
 from src.genetic_learner import GeneticLearner
 
 env = TetrisEnv()
-weight = numpy.array([-0.43048529747041575, -0.1950686893201384, -0.29151194284020493, -0.8015762242500877, -0.2216460218619617])
-agent = GeneticAgent(env, weight, 329.5)
-print(agent.play(1000,seed=5))
+weight = numpy.array([-0.8066651877814951, -0.025211014142500453, -0.030428318607102118, -0.8589686185198616])
+# agent = GeneticAgent(env, weight, None)
+for i in GeneticLearner.normailize(GeneticLearner(),weight):
+    print(i)
+# print(agent.play(1000,seed=5))

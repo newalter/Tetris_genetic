@@ -10,11 +10,11 @@ BATCH_SIZE = 500
 
 # currently we have 6 attributes: average height, maximum height, height differences, number of holes,
 # number of holes^2, depth of holes,
-NUM_ATTRIBUTE = 5
+NUM_ATTRIBUTE = 4
 
 # Size of the subset of potential parents. A larger tournament_size indicates a larger selective pressure.
 # A larger tournament_size might result in faster convergence but also lower diversity in the population
-TOURNAMENT_SIZE = 6
+TOURNAMENT_SIZE = 5
 
 # How close are two members to be considered as a single specimen and one deleted
 CLOSENESS = 0.02
@@ -68,7 +68,7 @@ class GeneticLearner():
         f.close()
 
     # loads weight from the designated filepath
-    def load_weight(self, filepath="weight.txt"):
+    def load_weight(self, filepath="weight.txt", load_fitness = True):
         f = open(filepath, "r")
         for line in f:
             weight = np.array([float(k) for k in line.split()])
@@ -76,7 +76,10 @@ class GeneticLearner():
             if len(weight) == NUM_ATTRIBUTE + 1:
                 fitness = weight[NUM_ATTRIBUTE]
                 weight.resize(NUM_ATTRIBUTE)
-            self.agents.append(GeneticAgent(self.env, weight, fitness))
+            if load_fitness:
+                self.agents.append(GeneticAgent(self.env, weight, fitness))
+            else:
+                self.agents.append(GeneticAgent(self.env, weight, None))
         f.close()
 
     # main learning method: in each generation, it replenishes the population, produces offsprings, sieves out similar

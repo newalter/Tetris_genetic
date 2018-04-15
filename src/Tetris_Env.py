@@ -3,7 +3,7 @@ from src.configuration import pOrients, pWidth, pHeight, pTop, pBottom, Num_Type
 from random import Random
 import numpy as np
 
-LOSING_ROW = 11
+LOSING_ROW = 18
 
 class ActionSpace(object):
     legal_moves = []
@@ -105,13 +105,16 @@ class TetrisEnv(object):
         for i in range(Col - 1):
             diff_height = diff_height + max(abs(top[i] - top[i + 1]) - 1, 0)
         holes = 0
+        holes_height = 0
         depth_holes = 0
         for j in range(Col):
             for i in range(top[j]):
-                if i < top[j] and board[i+1][j] == 0:
-                    continue
+                # if i < top[j] - 1 and board[i+1][j] == 0:
+                #     continue
                 if board[i][j] == 0:
                     holes = holes + 1
-                    depth_holes = depth_holes + i
+                    # depth_holes = depth_holes + (top[j] - i - 1)
         # attributes
-        return average_height, max_height, diff_height, holes, holes * holes , depth_holes
+        # return average_height, average_height * average_height, max_height, max_height* max_height, diff_height, holes
+        # return average_height, max_height, diff_height, holes
+        return average_height, diff_height, diff_height * diff_height, holes
